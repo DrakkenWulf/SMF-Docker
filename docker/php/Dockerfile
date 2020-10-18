@@ -2,11 +2,13 @@ FROM php:7.3-fpm
 COPY smf/ .
 USER root
 RUN chmod +x /var/www/html
+# This command set isn't happening for some reason, has to be done manually?
 RUN cp other/install.php install.php && \
     cp other/install_2-1_mysql.sql install_2-1_mysql.sql && \
     cp other/Settings.php Settings.php && \
     chmod 777 Settings.php && \
-    cp Settings.php Settings_bak.php
+    cp Settings.php Settings_bak.php && \
+    chmod 777 Settings_bak.php
 RUN apt-get update && apt-get install -y --no-install-recommends \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
