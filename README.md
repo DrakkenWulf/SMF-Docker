@@ -10,6 +10,7 @@ Configurable Docker image for SMF
 
 ```bash
 git clone git@github.com:MissAllSunday/SMF-Docker.git
+cd SMF-Docker   # note the following goes _into_ the upper directory. Will be copied into php section during docker compose
 git clone git@github.com:SimpleMachines/SMF2.1.git smf
 ```
 
