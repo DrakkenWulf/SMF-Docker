@@ -20,7 +20,9 @@ You can also clone an SMF 2.0 instead if you have access to it.
 cp .env.dist .env
 ```
 
-Edit your env variables according to your needs, set your external port if you're already using the default provided.
+Edit your env variables according to your needs.
+* Set your external port if you're already using the default provided.
+* You must set DB_PASSWORD to something other than empty.
 
 Add smf.local to your hosts
 ```bash
@@ -43,7 +45,7 @@ Open http://smf.local:88 (or the port you specified on your `.env file` ) with y
 
 Use `smf_mysql` as the DB hostname unless you modified the `CONTAINER_PREFIX` on your `.env` var
 
-##### Tested on Mac 10.14.5 and Ubuntu 18.04.3
+##### Tested on Mac 10.14.5 October 2020 and Ubuntu 18.04.3
 
 #### Tips
 - http://smf.local:88/info.php shows a `phpinfo();` page
