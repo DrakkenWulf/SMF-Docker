@@ -37,7 +37,7 @@ Add smf.local to 127.0.0.1
 Run
 
 ```bash
-docker-compose -up -d
+docker-compose up -d
 ```
 
 Might take a while to build on the first try.  
