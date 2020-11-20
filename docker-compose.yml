@@ -29,7 +29,7 @@ services:
     image: mysql:${MYSQL_VERSION}
     ports:
       - "${EXTERNAL_MYSQL_PORT}:${DB_PORT}"
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=mysql_native_password --sql-mode=""
     volumes:
       - ./smf:/var/www/html/
     restart: always
