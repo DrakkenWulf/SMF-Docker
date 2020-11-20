@@ -9,6 +9,7 @@ services:
       dockerfile: docker/php/Dockerfile
       args:
         - WITH_XDEBUG=${WITH_XDEBUG}
+    restart: unless-stopped
     container_name: ${CONTAINER_PREFIX}php
 
   nginx:
@@ -21,6 +22,7 @@ services:
       - NGINX_HOST=${NGINX_HOST}
       - NGINX_PORT=${NGINX_PORT}
     image: nginx:1.17.4
+    restart: unless-stopped
     depends_on:
       - php
     container_name: ${CONTAINER_PREFIX}nginx
@@ -32,7 +34,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password --sql-mode=""
     volumes:
       - ./smf:/var/www/html/
-    restart: always
+    restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     container_name: ${CONTAINER_PREFIX}mysql
