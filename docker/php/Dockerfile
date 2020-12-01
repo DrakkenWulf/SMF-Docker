@@ -10,12 +10,21 @@ RUN cp other/install.php install.php && \
     cp Settings.php Settings_bak.php && \
     chmod 777 Settings_bak.php
 RUN apt-get update && apt-get install -y --no-install-recommends \
+        sendmail \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
     && docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install -j$(nproc) mysqli
+
+# tell php about sendmail
+RUN echo "sendmail_path=/usr/sbin/sendmail -t -i" >> /usr/local/etc/php/conf.d/sendmail.ini
+# start sendmail when php starts
+RUN sed -i '/#!\/bin\/sh/aservice sendmail restart' /usr/local/bin/docker-php-entrypoint
+# link up hostnames so this internal sendmail can know our public address
+RUN sed -i '/#!\/bin\/sh/aecho "$(hostname -i)\t$(hostname) $(hostname).localhost hope.coldfire.org" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
+
 
 ARG WITH_XDEBUG=true
 
