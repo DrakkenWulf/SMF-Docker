@@ -1,0 +1,2 @@
+# rebuild file changes and start it. works to comment out the 'install' stuff in Dockerfile.
+docker-compose up -d --build
