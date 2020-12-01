@@ -23,7 +23,8 @@ RUN echo "sendmail_path=/usr/sbin/sendmail -t -i" >> /usr/local/etc/php/conf.d/s
 # start sendmail when php starts
 RUN sed -i '/#!\/bin\/sh/aservice sendmail restart' /usr/local/bin/docker-php-entrypoint
 # link up hostnames so this internal sendmail can know our public address
-RUN sed -i '/#!\/bin\/sh/aecho "$(hostname -i)\t$(hostname) $(hostname).localhost hope.coldfire.org" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
+RUN sed -i '/#!\/bin\/sh/aecho "$(hostname -i)\t$(hostname) hope.coldfire.org $(hostname).localhost" >> /etc/hosts' /usr/local/bin/docker-php-entrypoint
+RUN sed -i '/#!\/bin\/sh/aecho "hope.coldfire.org" >> /etc/mail/local-host-names' /usr/local/bin/docker-php-entrypoint
 
 
 ARG WITH_XDEBUG=true
