@@ -1,19 +1,21 @@
 FROM php:7.3-fpm
-COPY smf/ .
+COPY webtrees/ .
 USER root
+
 RUN chmod +x /var/www/html
-RUN cp other/install.php install.php && \
-    cp other/install_2-1_mysql.sql install_2-1_mysql.sql && \
-    cp other/Settings.php Settings.php && \
-    chmod 777 Settings.php && \
-    cp Settings.php Settings_bak.php
 RUN apt-get update && apt-get install -y --no-install-recommends \
         sendmail \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
+        libicu-dev \
+        libzip-dev \
     && docker-php-ext-install -j$(nproc) iconv \
     && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install -j$(nproc) exif \
+    && docker-php-ext-install -j$(nproc) intl \
+    && docker-php-ext-install -j$(nproc) zip \
+    && docker-php-ext-install -j$(nproc) pdo_mysql \
     && docker-php-ext-install -j$(nproc) mysqli
 
 # tell php about sendmail
@@ -35,3 +37,10 @@ RUN if [ $WITH_XDEBUG = "true" ] ; then \
         echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
         echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
     fi ;
+
+# RUN cp other/install.php install.php && \
+#     cp other/install_2-1_mysql.sql install_2-1_mysql.sql && \
+#     cp other/Settings.php Settings.php && \
+#     chmod 777 Settings.php && \
+#     cp Settings.php Settings_bak.php
+
