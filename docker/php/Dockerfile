@@ -2,11 +2,6 @@ FROM php:7.3-fpm
 COPY smf/ .
 USER root
 RUN chmod +x /var/www/html
-RUN cp other/install.php install.php && \
-    cp other/install_2-1_mysql.sql install_2-1_mysql.sql && \
-    cp other/Settings.php Settings.php && \
-    chmod 777 Settings.php && \
-    cp Settings.php Settings_bak.php
 RUN apt-get update && apt-get install -y --no-install-recommends \
         sendmail \
         libfreetype6-dev \
@@ -35,3 +30,9 @@ RUN if [ $WITH_XDEBUG = "true" ] ; then \
         echo "display_errors = On" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
         echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
     fi ;
+
+RUN cp other/install.php install.php && \
+    cp other/install_2-1_mysql.sql install_2-1_mysql.sql && \
+    cp other/Settings.php Settings.php && \
+    chmod 777 Settings.php && \
+    cp Settings.php Settings_bak.php
